@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSP検証ページ</title>
+  </head>
+  <body>
+    <script nonce="<%= nonce %>">
+      // alert("Hello, CSP!");
+      if (window.trustedTypes && trustedTypes.createPolicy) {
+        const policy = trustedTypes.createPolicy("script-url", {
+          createScriptURL: (str) => {
+            const url = new URL(str, location.origin);
+            if (url.origin !== location.origin) {
+              throw new Error("クロスオリジンは許可されていません。");
+            }
+            return url;
+          },
+        });
+        const script = document.createElement("script");
+        // script.src = "./csp-test.js";
+        script.src = policy.createScriptURL("./csp-test.js");
+        document.body.appendChild(script);
+      }
+    </script>
+  </body>
+</html>
